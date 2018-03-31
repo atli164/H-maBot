@@ -1,3 +1,3 @@
-# Háma Bot
+# HáMA Bot
 
-penis
+Official bot for the HáMA discord guild.
