@@ -35,14 +35,14 @@ const roll = {
     const opt = args.length === 1 ? 's' : args[1];
     var reply = num1 === 1 ? 'Your roll returned: ' : 'Your rolls returned: ';
     if(opt === 's') {
-      reply.concat(Array(num1).fill().map(() => {
+      reply = reply.concat(Array(num1).fill().map(() => {
         return Math.floor(1 + Math.random() * num2);
       }).reduce((a, b) => a + b, 0).toString());
     } else if(opt === 'i') {
       Array(num1).fill().map(() => {
         return Math.floor(1 + Math.random() * num2);
       }).forEach(num => {
-        reply.concat(num.toString() + ', ');
+        reply = reply.concat(num.toString() + ', ');
       });
     }
     msg.channel.send(reply);
