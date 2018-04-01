@@ -59,3 +59,6 @@ typings/
 
 # vscode
 .vscode/
+
+# swp files
+*.swp
