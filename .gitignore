@@ -62,3 +62,6 @@ typings/
 
 # swp files
 *.swp
+
+# config containing secret token
+src/config.json
