@@ -20,7 +20,7 @@ bot.on('ready', () => {
   // Load modules
   fs.readdir(module_dir, (err, files) => {
     if (err) {
-      console.log('Failed to read file due to ' + err);
+      console.log('Failed to read files due to ' + err);
     }
     files.forEach(file => {
       var cur_module;
