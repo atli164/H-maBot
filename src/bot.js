@@ -4,9 +4,6 @@ const fs = require('fs');
 const path = require('path');
 
 const module_dir = path.join(__dirname, 'modules/');
-const exec_dir = path.join(__dirname, 'execs/');
-const util_dir = path.join(__dirname, 'utils/');
-
 
 const bot = new Discord.Client();
 const modules = [];
