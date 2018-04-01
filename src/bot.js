@@ -5,8 +5,16 @@ const config = require('./config.json');
 const module_dir = './modules/';
 const exec_dir = './execs/';
 const util_dir = './utils/';
+var fs = require('fs');
+var path = require('path');
 var modules, execs, utils;
 var commands = {};
+
+function getDirectories(srcpath) {
+    return fs.readdirSync(srcpath).filter((file) => {
+        return fs.statSync(path.join(srcpath, file)).isDirectory();
+    });
+}
 
 bot.on('ready', () => {
     console.log('Ready for action!');
@@ -43,6 +51,12 @@ bot.on('ready', () => {
         }
     });
 });
+
+function runCommand(cmd, args) {
+    commands.forEach(cur_cmd => {
+        // TODO
+    });
+}
 
 bot.on('message', async message => {
     // Good rule of thumb to ignore message
