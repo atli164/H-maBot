@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/atli164/H-maBot/issues"
   },
-  "homepage": "https://github.com/atli164/H-maBot#readme"
+  "homepage": "https://github.com/atli164/H-maBot#readme",
+  "dependencies": {
+    "discord.js": "^11.3.2"
+  }
 }
