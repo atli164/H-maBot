@@ -35,7 +35,7 @@ bot.on('ready', () => {
           cur_module.commands.forEach(cmd => {
             if (cur_module[cmd]) {
               try {
-                commands.append(cur_module[cmd]);
+                commands.push(cur_module[cmd]);
               } catch (err) {
                 console.log('Failed to set up command ' + cmd + ' due to ' + err);
               }
