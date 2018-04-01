@@ -10,8 +10,6 @@ const util_dir = './utils/';
 const bot = new Discord.Client();
 var commands = [];
 
-fs = require('fs');
-
 bot.on('ready', () => {
   console.log('Ready for action!');
   bot.user.setPresence({
@@ -56,7 +54,7 @@ bot.on('message', msg => {
 
   // Ignore messages not starting with prefix
   // which we set in the config file
-  if (msg.content.startsWith(config.prefix)) return;
+  if (!msg.content.startsWith(config.prefix)) return;
 
   // Split message into command and arguments
   const args = msg.content.slice(config.prefix.length).trim().split(/ +/g);
