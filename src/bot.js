@@ -49,12 +49,6 @@ bot.on('ready', () => {
   });
 });
 
-function runCommand(cmd, args) {
-  commands.forEach(cur_cmd => {
-    // TODO
-  });
-}
-
 bot.on('message', msg => {
   // Good rule of thumb to ignore message
   // from other bots (no anti-bot stuff pls)
