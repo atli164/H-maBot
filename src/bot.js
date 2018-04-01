@@ -5,15 +5,8 @@ const module_dir = './modules/';
 const exec_dir = './execs/';
 const util_dir = './utils/';
 var fs = require('fs');
-var path = require('path');
 var modules, execs, utils;
 var commands = {};
-
-function getDirectories(srcpath) {
-    return fs.readdirSync(srcpath).filter((file) => {
-        return fs.statSync(path.join(srcpath, file)).isDirectory();
-    });
-}
 
 bot.on('ready', () => {
     console.log('Ready for action!');
@@ -28,25 +21,31 @@ bot.on('ready', () => {
     utils = getDirectories(util_dir);
 
     // Load modules
-    modules.forEach(cur_module => {
+    fs.readdir(module_dir, (err, files) => {
+      if(err) {
+        console.log('Failed to read file due to ' + err);
+      }
+      files.forEach(file => {
+        var cur_module;
         try {
-            cur_module = require(module_dir + cur_module);
+          cur_module = require(module_dir + file);
         } catch(err) {
-            console.log('Failed to set up module ' + cur_module + ' due to ' + err);
+          console.log('Failed to set up module ' + file + ' due to ' + err);
         }
-        if(module) {
-            if('commands' in module) {
-                for(var j = 0; j < cur_module.commands.length; ++j) {
-                    if(module.commands[j] in module) {
-                        try {
-                            commands[module.commands[j]] =  module[module.commands[j]];
-                        } catch(err) {
-                            console.log('Failed to set up command ' + module.commands[j] + ' due to ' + err);
-                        }
-                    }
+        if(cur_module) {
+          if('commands' in cur_module) {
+            cur_module.commands.forEach(cmd => {
+              if(cur_module[cmd]) {
+                try {
+                  commands[cmd] = cur_module[cmd];
+                } catch(err) {
+                  console.log('Failed to set up command ' + cmd + ' due to ' + err);
                 }
-            }
+              }
+            });
+          }
         }
+      });
     });
 });
 
