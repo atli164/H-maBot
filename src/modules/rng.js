@@ -14,8 +14,8 @@ const roll = {
         return;
       }
     }
-    const num1 = Number(args[0].match(/[0-9]+/)[0]);
-    const num2 = Number(args[0].match(/[0-9]+/)[1]);
+    const num1 = Number(args[0].match(/[0-9]+/g)[0]);
+    const num2 = Number(args[0].match(/[0-9]+/g)[1]);
     if(num1 <= 0) {
       msg.channel.send('I have to roll a positive amount of dice!');
       return;
@@ -35,7 +35,7 @@ const roll = {
     const opt = args.length === 1 ? 's' : args[1];
     var reply = num1 === 1 ? 'Your roll returned: ' : 'Your rolls returned: ';
     if(opt === 's') {
-      reply.concat(Array(Number(num1)).fill().map(() => {
+      reply.concat(Array(num1).fill().map(() => {
         return Math.floor(1 + Math.random() * num2);
       }).reduce((a, b) => a + b, 0).toString());
     } else if(opt === 'i') {
