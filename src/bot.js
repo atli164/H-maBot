@@ -1,6 +1,5 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
-const token = 'token here';
 const config = require('./config.json');
 const module_dir = './modules/';
 const exec_dir = './execs/';
@@ -30,11 +29,10 @@ bot.on('ready', () => {
 
     // Load modules
     modules.forEach(cur_module => {
-        var cur_module;
         try {
-            cur_module = require(module_dir + modules[i]);
+            cur_module = require(module_dir + cur_module);
         } catch(err) {
-            console.log('Failed to set up module ' + modules[i] + ' due to ' + err);
+            console.log('Failed to set up module ' + cur_module + ' due to ' + err);
         }
         if(module) {
             if('commands' in module) {
@@ -68,8 +66,8 @@ bot.on('message', msg => {
     if(msg.content.indexOf(config.prefix) !== 0) return;
 
     // Split message into command and arguments
-    const args = ms.content.slice(config.prefix.length).trim().split(/ +/g);
-    const command = args.shift.toLowerCase();
+    const args = msg.content.slice(config.prefix.length).trim().split(/ +/g);
+    const cmd = args.shift.toLowerCase();
 });
 
 bot.login(config.token);
