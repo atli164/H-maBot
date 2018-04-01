@@ -39,6 +39,22 @@ bot.on('ready', () => {
       }
     });
   });
+
+  // Load utils
+  fs.readdir(util_dir, (err, files) => {
+    if(err) {
+      console.log('Failed to read files due to ' + err);
+      throw err;
+    }
+
+    files.forEach(file => {
+      try {
+        let cur_util = require(path.join(util_dir, file));
+      } catch(err) {
+        console.log('Failed to set up util ' + file + ' due to ' + err);
+      }
+    });
+  });
 });
 
 function execMsg(msg) {
