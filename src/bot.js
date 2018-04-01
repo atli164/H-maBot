@@ -5,7 +5,6 @@ const module_dir = './modules/';
 const exec_dir = './execs/';
 const util_dir = './utils/';
 var fs = require('fs');
-var modules, execs, utils;
 var commands = {};
 
 bot.on('ready', () => {
@@ -16,10 +15,6 @@ bot.on('ready', () => {
     }
   });
   
-  modules = getDirectories(module_dir);
-  execs = getDirectories(exec_dir);
-  utils = getDirectories(util_dir);
-
   // Load modules
   fs.readdir(module_dir, (err, files) => {
     if(err) {
