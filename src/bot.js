@@ -1,16 +1,17 @@
 const Discord = require('discord.js');
 const config = require('./config.json');
 const fs = require('fs');
+const path = require('path');
 
-const module_dir = './modules/';
-const exec_dir = './execs/';
-const util_dir = './utils/';
+const module_dir = path.join(__dirname, 'modules/');
+const exec_dir = path.join(__dirname, 'execs/');
+const util_dir = path.join(__dirname, 'utils/');
+
 
 const bot = new Discord.Client();
-var commands = [];
+const modules = [];
 
 const token = process.env[config.token_env_var_name];
-console.log(token);
 
 bot.on('ready', () => {
   console.log('Ready for action!');
@@ -24,26 +25,17 @@ bot.on('ready', () => {
   fs.readdir(module_dir, (err, files) => {
     if (err) {
       console.log('Failed to read files due to ' + err);
+      throw err;
     }
+
     files.forEach(file => {
-      var cur_module;
       try {
-        cur_module = require(module_dir + file);
+
+        let cur_module = require(path.join(module_dir, file));
+        modules.push(cur_module);
+
       } catch (err) {
         console.log('Failed to set up module ' + file + ' due to ' + err);
-      }
-      if (cur_module) {
-        if ('commands' in cur_module) {
-          cur_module.commands.forEach(cmd => {
-            if (cur_module[cmd]) {
-              try {
-                commands.push(cur_module[cmd]);
-              } catch (err) {
-                console.log('Failed to set up command ' + cmd + ' due to ' + err);
-              }
-            }
-          });
-        }
       }
     });
   });
@@ -60,14 +52,21 @@ bot.on('message', msg => {
 
   // Split message into command and arguments
   const msg_content = msg.content.slice(config.prefix.length);
-  const cmd_name = msg_content.substr(0, msg_content.indexOf(' '));
-  const args = msg_content.substr(msg_content.indexOf(' ') + 1);
+  const cmd_name = msg_content.split(/ +/)[0];
+  const args = msg_content.split(/ +/).slice(1);
 
   // See if we have any commands matching whatever we just recieved.
   // If we do, execute them.
-  commands
-    .filter(cmd => { return cmd_name.match(cmd.test); })
-    .forEach(cmd => { cmd.process(bot, msg, args); });
+  modules.forEach(mod => {
+    mod.commands
+      .filter(cmd => { return cmd_name.match(cmd.test); })
+      .forEach(cmd => { cmd.process(bot, msg, args); });
+  });
 });
 
-bot.login(token);
+bot.login(token).then(
+  () => {/* resolved callback*/ },
+  err => {
+    console.log('Failed to log in with ' + err);
+  }
+);
