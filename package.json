@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/atli164/H-maBot#readme",
   "dependencies": {
-    "discord.js": "^11.3.2"
+    "discord.js": "^11.3.2",
+    "eslint": "^4.19.1"
   }
 }

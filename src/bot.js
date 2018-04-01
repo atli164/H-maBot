@@ -6,6 +6,7 @@ const module_dir = './modules/';
 const exec_dir = './execs/';
 const util_dir = './utils/';
 var modules, execs, utils;
+var commands = {};
 
 bot.on('ready', () => {
     console.log('Ready for action!');
@@ -20,7 +21,7 @@ bot.on('ready', () => {
     utils = getDirectories(util_dir);
 
     // Load modules
-    for(var i = 0; i < modules.length; ++i) {
+    modules.forEach(cur_module => {
         var cur_module;
         try {
             cur_module = require(module_dir + modules[i]);
@@ -31,12 +32,16 @@ bot.on('ready', () => {
             if('commands' in module) {
                 for(var j = 0; j < cur_module.commands.length; ++j) {
                     if(module.commands[j] in module) {
-                        bot.addCommand(module.commands[j], module[module.commands[j]]);
+                        try {
+                            commands[module.commands[j]] =  module[module.commands[j]];
+                        } catch(err) {
+                            console.log('Failed to set up command ' + module.commands[j] + ' due to ' + err);
+                        }
                     }
                 }
             }
         }
-    }
+    });
 });
 
 bot.on('message', async message => {
