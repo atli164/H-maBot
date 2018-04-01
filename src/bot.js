@@ -57,8 +57,9 @@ bot.on('message', msg => {
   if (!msg.content.startsWith(config.prefix)) return;
 
   // Split message into command and arguments
-  const args = msg.content.slice(config.prefix.length).trim().split(/ +/g);
-  const cmd_name = args.shift().toLowerCase();
+  const msg_content = msg.content.slice(config.prefix.length);
+  const args = msg_content.substr(0, msg_content.indexOf(' '));
+  const cmd_name = msg_content.substr(msg_content.indexOf(' ') + 1);
 
   // See if we have any commands matching whatever we just recieved.
   // If we do, execute them.
