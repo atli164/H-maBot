@@ -41,7 +41,7 @@ bot.on('ready', () => {
   });
 });
 
-bot.on('message', msg => {
+function execMsg(msg) {
   // Good rule of thumb to ignore message
   // from other bots (no anti-bot stuff pls)
   if (msg.author.bot) return;
@@ -62,6 +62,14 @@ bot.on('message', msg => {
       .filter(cmd => { return cmd_name.match(cmd.test); })
       .forEach(cmd => { cmd.process(bot, msg, args); });
   });
+}
+
+bot.on('message', message => {
+  execMsg(message);
+});
+
+bot.on('messageUpdate', (oldMessage, newMessage) => {
+  execMsg(newMessage);
 });
 
 bot.login(token).then(
