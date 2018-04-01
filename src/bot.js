@@ -58,17 +58,17 @@ function runCommand(cmd, args) {
     });
 }
 
-bot.on('message', async message => {
+bot.on('message', msg => {
     // Good rule of thumb to ignore message
     // from other bots (no anti-bot stuff pls)
-    if(message.author.bot) return;
+    if(msg.author.bot) return;
 
     // Ignore messages not starting with prefix
     // which we set in the config file
-    if(message.content.indexOf(config.prefix) !== 0) return;
+    if(msg.content.indexOf(config.prefix) !== 0) return;
 
     // Split message into command and arguments
-    const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+    const args = ms.content.slice(config.prefix.length).trim().split(/ +/g);
     const command = args.shift.toLowerCase();
 });
 
