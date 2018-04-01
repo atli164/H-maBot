@@ -1,13 +1,45 @@
 const Discord = require('discord.js');
-const client = new Discord.Client();
+const bot = new Discord.Client();
 const token = 'token here';
 const config = require('./config.json');
+const module_dir = './modules/';
+const exec_dir = './execs/';
+const util_dir = './utils/';
+var modules, execs, utils;
 
-client.on('ready', () => {
+bot.on('ready', () => {
     console.log('Ready for action!');
+    bot.user.setPresence({
+        game: {
+            name: 'Being awesome'
+        }
+    });
+    
+    modules = getDirectories(module_dir);
+    execs = getDirectories(exec_dir);
+    utils = getDirectories(util_dir);
+
+    // Load modules
+    for(var i = 0; i < modules.length; ++i) {
+        var cur_module;
+        try {
+            cur_module = require(module_dir + modules[i]);
+        } catch(err) {
+            console.log('Failed to set up module ' + modules[i] + ' due to ' + err);
+        }
+        if(module) {
+            if('commands' in module) {
+                for(var j = 0; j < cur_module.commands.length; ++j) {
+                    if(module.commands[j] in module) {
+                        bot.addCommand(module.commands[j], module[module.commands[j]]);
+                    }
+                }
+            }
+        }
+    }
 });
 
-client.on('message', async message => {
+bot.on('message', async message => {
     // Good rule of thumb to ignore message
     // from other bots (no anti-bot stuff pls)
     if(message.author.bot) return;
@@ -21,4 +53,4 @@ client.on('message', async message => {
     const command = args.shift.toLowerCase();
 });
 
-client.login(config.token);
+bot.login(config.token);
