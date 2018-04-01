@@ -4,9 +4,6 @@ const fs = require('fs');
 const path = require('path');
 
 const module_dir = path.join(__dirname, 'modules/');
-const exec_dir = path.join(__dirname, 'execs/');
-const util_dir = path.join(__dirname, 'utils/');
-
 
 const bot = new Discord.Client();
 const modules = [];
@@ -36,22 +33,6 @@ bot.on('ready', () => {
 
       } catch (err) {
         console.log('Failed to set up module ' + file + ' due to ' + err);
-      }
-    });
-  });
-
-  // Load utils
-  fs.readdir(util_dir, (err, files) => {
-    if(err) {
-      console.log('Failed to read files due to ' + err);
-      throw err;
-    }
-
-    files.forEach(file => {
-      try {
-        let cur_util = require(path.join(util_dir, file));
-      } catch(err) {
-        console.log('Failed to set up util ' + file + ' due to ' + err);
       }
     });
   });
