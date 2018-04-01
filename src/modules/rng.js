@@ -39,7 +39,7 @@ const roll = {
         return Math.floor(1 + Math.random() * num2);
       }).reduce((a, b) => a + b, 0).toString());
     } else if(opt === 'i') {
-      Array(Number(num1)).fill().map(() => {
+      Array(num1).fill().map(() => {
         return Math.floor(1 + Math.random() * num2);
       }).forEach(num => {
         reply.concat(num.toString() + ', ');
