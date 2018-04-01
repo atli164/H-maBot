@@ -1,1 +1,4 @@
-{}
+{
+  "prefix": "!",
+  "token_env_var_name": "HAMABOT_TOKEN"
+}

@@ -9,6 +9,9 @@ const util_dir = './utils/';
 const bot = new Discord.Client();
 var commands = [];
 
+const token = process.env[config.token_env_var_name];
+console.log(token);
+
 bot.on('ready', () => {
   console.log('Ready for action!');
   bot.user.setPresence({
@@ -67,4 +70,4 @@ bot.on('message', msg => {
     .forEach(cmd => { cmd.process(bot, msg, args); });
 });
 
-bot.login(config.token);
+bot.login(token);
