@@ -10,11 +10,7 @@ const util_dir = './utils/';
 const bot = new Discord.Client();
 var commands = [];
 
-function getDirectories(srcpath) {
-  return fs.readdirSync(srcpath).filter((file) => {
-    return fs.statSync(path.join(srcpath, file)).isDirectory();
-  });
-}
+fs = require('fs');
 
 bot.on('ready', () => {
   console.log('Ready for action!');
@@ -62,7 +58,6 @@ function runCommand(cmd, args) {
 bot.on('message', msg => {
   // Good rule of thumb to ignore message
   // from other bots (no anti-bot stuff pls)
-<<<<<<< HEAD
   if (msg.author.bot) return;
 
   // Ignore messages not starting with prefix
@@ -78,17 +73,6 @@ bot.on('message', msg => {
   commands
     .filter(cmd => { return cmd_name.match(cmd.test); })
     .forEach(cmd => { cmd.process(bot, msg, args); });
-=======
-  if(msg.author.bot) return;
-
-  // Ignore messages not starting with prefix
-  // which we set in the config file
-  if(msg.content.indexOf(config.prefix) !== 0) return;
-
-  // Split message into command and arguments
-  const args = msg.content.slice(config.prefix.length).trim().split(/ +/g);
-  const cmd = args.shift.toLowerCase();
->>>>>>> 9bb61794cd52d8ddfccb5b2a39e1f0e0925f52f8
 });
 
 bot.login(config.token);
