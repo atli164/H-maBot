@@ -54,7 +54,7 @@
             "error",
             "always"
         ],
-        "no-console": 1
+        "no-console": 0
     }
 }
 >>>>>>> 180b6afb763d043e5407c590dbced301d3762496
