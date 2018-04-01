@@ -21,7 +21,7 @@ bot.on('ready', () => {
     utils = getDirectories(util_dir);
 
     // Load modules
-    for(var i = 0; i < modules.length; ++i) {
+    modules.forEach(cur_module => {
         var cur_module;
         try {
             cur_module = require(module_dir + modules[i]);
@@ -41,7 +41,7 @@ bot.on('ready', () => {
                 }
             }
         }
-    }
+    });
 });
 
 bot.on('message', async message => {
