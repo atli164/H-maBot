@@ -6,7 +6,6 @@ const path = require('path');
 const module_dir = './modules/';
 const exec_dir = './execs/';
 const util_dir = './utils/';
-<<<<<<< HEAD
 
 const bot = new Discord.Client();
 var commands = [];
@@ -16,10 +15,6 @@ function getDirectories(srcpath) {
     return fs.statSync(path.join(srcpath, file)).isDirectory();
   });
 }
-=======
-var fs = require('fs');
-var commands = {};
->>>>>>> 580a0901af2aa2a46a3e3a52212227ff6baf891b
 
 bot.on('ready', () => {
   console.log('Ready for action!');
